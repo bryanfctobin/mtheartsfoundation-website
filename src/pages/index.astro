@@ -3,10 +3,31 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout>
-	<main class="landing-page">
-		<h1>MT Hearts Foundation</h1>
+	<div class="site">
+		<header class="site-header">
+			<div class="header-title">MT Hearts Foundation</div>
 
-		<footer>
+			<a href="mailto:bryanfctobin@gmail.com?subject=MT%20Hearts%20Foundation">
+				Contact
+			</a>
+		</header>
+
+		<main class="landing-page">
+			<section class="hero" aria-labelledby="page-title">
+				<h1 id="page-title">MT Hearts Foundation</h1>
+
+				<div class="event-details">
+					<p>
+						Join us for a special memorial event planned for the third
+						weekend of June 2027.
+					</p>
+
+					<p>More information will be announced soon.</p>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer">
 			<a
 				href="https://bryantobin.com/marlene/"
 				target="_blank"
@@ -15,61 +36,145 @@ import Layout from '../layouts/Layout.astro';
 				Memorial Video
 			</a>
 		</footer>
-	</main>
+	</div>
 </Layout>
 
 <style>
-	@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,600&display=swap');
+	@import url('https://fonts.googleapis.com/css2?family=Arizonia&family=Cormorant+Garamond:wght@500;600;700&display=swap');
 
 	:global(html),
 	:global(body) {
 		margin: 0;
 		min-height: 100%;
+		background: #c45d7b;
 	}
 
 	:global(body) {
-		background: #c75b7a;
-		font-family: Arial, Helvetica, sans-serif;
+		font-family: 'Cormorant Garamond', Georgia, serif;
+	}
+
+	.site {
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+		min-height: 100svh;
+		background: #c45d7b;
+		color: #ffffff;
+	}
+
+	.site-header,
+	.site-footer {
+		box-sizing: border-box;
+		display: flex;
+		align-items: center;
+		width: 100%;
+		min-height: 72px;
+		padding: 1rem clamp(1.25rem, 4vw, 3rem);
+		background: #090909;
+		color: #f19ab2;
+	}
+
+	.site-header {
+		justify-content: space-between;
+	}
+
+	.header-title {
+		font-size: clamp(1.15rem, 2vw, 1.4rem);
+		font-weight: 700;
+		letter-spacing: 0.04em;
+	}
+
+	.site-header a,
+	.site-footer a {
+		color: #f19ab2;
+		font-size: 1.15rem;
+		font-weight: 700;
+		letter-spacing: 0.03em;
+		text-decoration: none;
+	}
+
+	.site-header a:hover,
+	.site-header a:focus-visible,
+	.site-footer a:hover,
+	.site-footer a:focus-visible {
+		color: #ffffff;
+		text-decoration: underline;
+		text-underline-offset: 0.3rem;
+	}
+
+	.site-header a:focus-visible,
+	.site-footer a:focus-visible {
+		outline: 2px solid #ffffff;
+		outline-offset: 4px;
 	}
 
 	.landing-page {
 		box-sizing: border-box;
 		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-		align-items: center;
-		min-height: 100vh;
-		padding: 3rem 1.5rem 2rem;
+		flex: 1;
+		justify-content: center;
+		align-items: flex-start;
+		padding: clamp(4rem, 12vh, 8rem) 1.5rem 4rem;
 		text-align: center;
-		color: #ffffff;
+	}
+
+	.hero {
+		width: min(100%, 1100px);
 	}
 
 	h1 {
-		margin: auto 0;
-		font-family: 'Cormorant Garamond', Georgia, serif;
-		font-size: clamp(3.75rem, 11vw, 9rem);
-		font-style: italic;
-		font-weight: 600;
+		margin: 0;
+		font-family: 'Arizonia', cursive;
+		font-size: clamp(4rem, 11vw, 9rem);
+		font-weight: 400;
 		line-height: 0.95;
-		letter-spacing: -0.025em;
+		letter-spacing: 0;
 		text-wrap: balance;
 	}
 
-	footer {
-		width: 100%;
-		padding-top: 2rem;
-	}
-
-	footer a {
-		color: #ffffff;
-		font-size: 1rem;
+	.event-details {
+		max-width: 700px;
+		margin: clamp(2rem, 5vw, 3.5rem) auto 0;
+		font-size: clamp(1.25rem, 2.2vw, 1.55rem);
 		font-weight: 600;
-		text-decoration: underline;
-		text-underline-offset: 0.3rem;
+		line-height: 1.5;
 	}
 
-	footer a:hover,
-	footer a:focus-visible {
-		text-decoration-thickness: 0.15rem;
+	.event-details p {
+		margin: 0.4rem 0;
+	}
+
+	.site-footer {
+		justify-content: center;
+		text-align: center;
+	}
+
+	@media (max-width: 600px) {
+		.site-header,
+		.site-footer {
+			min-height: 64px;
+			padding-inline: 1.25rem;
+		}
+
+		.header-title,
+		.site-header a,
+		.site-footer a {
+			font-size: 1.05rem;
+		}
+
+		.landing-page {
+			padding: 2.25rem 1.25rem 3rem;
+		}
+
+		h1 {
+			font-size: clamp(2.75rem, 14vw, 4.25rem);
+			line-height: 0.95;
+		}
+
+		.event-details {
+			margin-top: 1.75rem;
+			font-size: 1.1rem;
+			line-height: 1.55;
+		}
 	}
 </style>
