@@ -2,30 +2,218 @@
 import Layout from '../layouts/Layout.astro';
 import { Image } from 'astro:assets';
 
-import brochureFront from '../assets/images/MTHeartsBrochure-Front-Black.jpg';
-import brochureBack from '../assets/images/MTHeartsBrochure-Back-Black.jpg';
+import cover from '../assets/images/1-cover.png';
+import story from '../assets/images/2-story.png';
+import purpose from '../assets/images/3-purpose.png';
+import memorial5k from '../assets/images/4-memorial-5k.png';
+import serviceGiving from '../assets/images/5-service-giving.png';
+import getInvolved from '../assets/images/6-get-involved.png';
+
+const panels = [
+	{
+		image: cover,
+		alt: 'MT Hearts Foundation brochure cover',
+	},
+	{
+		image: story,
+		alt: 'Our Story',
+	},
+	{
+		image: purpose,
+		alt: 'Our Purpose',
+	},
+	{
+		image: memorial5k,
+		alt: 'The Marlene Memorial 5K',
+	},
+	{
+		image: serviceGiving,
+		alt: 'Service in Our Community and Giving Back',
+	},
+	{
+		image: getInvolved,
+		alt: 'Get Involved',
+	},
+];
 ---
 
 <Layout>
 	<main class="brochure-page">
-		<div class="brochure-grid">
-			<Image
-				src={brochureFront}
-				alt="MT Hearts Foundation brochure front"
-				class="brochure-image"
-			/>
+		<section
+			class="brochure"
+			aria-label="MT Hearts Foundation interactive brochure"
+			tabindex="0"
+		>
+			<div class="stage">
+				<button
+					class="arrow prev"
+					type="button"
+					aria-label="Previous brochure panel"
+				>
+					&#8249;
+				</button>
 
-			<Image
-				src={brochureBack}
-				alt="MT Hearts Foundation brochure back"
-				class="brochure-image"
-			/>
-		</div>
+				<ul class="slides">
+					{
+						panels.map((panel, index) => (
+							<li
+								class:list={['slide', { active: index === 0 }]}
+								data-slide={index}
+							>
+								<Image
+									src={panel.image}
+									alt={panel.alt}
+									class="brochure-image"
+								/>
+							</li>
+						))
+					}
+				</ul>
+
+				<button
+					class="arrow next"
+					type="button"
+					aria-label="Next brochure panel"
+				>
+					&#8250;
+				</button>
+			</div>
+
+			<div class="controls">
+				<div class="dots" aria-label="Brochure panels">
+					{
+						panels.map((_, index) => (
+							<button
+								class="dot"
+								type="button"
+								data-index={index}
+								aria-label={`Show panel ${index + 1}`}
+								aria-current={index === 0 ? 'true' : 'false'}
+							/>
+						))
+					}
+				</div>
+
+				<div class="count" aria-live="polite">
+					1 / {panels.length}
+				</div>
+			</div>
+		</section>
 	</main>
 </Layout>
 
+<script>
+	const brochure = document.querySelector('.brochure');
+
+	if (brochure) {
+		const slides = Array.from(
+			brochure.querySelectorAll<HTMLElement>('.slide')
+		);
+
+		const dots = Array.from(
+			brochure.querySelectorAll<HTMLButtonElement>('.dot')
+		);
+
+		const count = brochure.querySelector<HTMLElement>('.count');
+		const previous = brochure.querySelector<HTMLButtonElement>('.prev');
+		const next = brochure.querySelector<HTMLButtonElement>('.next');
+
+		let currentIndex = 0;
+		let touchStartX: number | null = null;
+
+		const showSlide = (newIndex: number) => {
+			currentIndex =
+				(newIndex + slides.length) % slides.length;
+
+			slides.forEach((slide, index) => {
+				slide.classList.toggle(
+					'active',
+					index === currentIndex
+				);
+			});
+
+			dots.forEach((dot, index) => {
+				dot.setAttribute(
+					'aria-current',
+					index === currentIndex ? 'true' : 'false'
+				);
+			});
+
+			if (count) {
+				count.textContent =
+					`${currentIndex + 1} / ${slides.length}`;
+			}
+		};
+
+		previous?.addEventListener('click', () => {
+			showSlide(currentIndex - 1);
+		});
+
+		next?.addEventListener('click', () => {
+			showSlide(currentIndex + 1);
+		});
+
+		dots.forEach((dot) => {
+			dot.addEventListener('click', () => {
+				const index = Number(dot.dataset.index);
+
+				if (!Number.isNaN(index)) {
+					showSlide(index);
+				}
+			});
+		});
+
+		brochure.addEventListener('keydown', (event) => {
+			if (event.key === 'ArrowLeft') {
+				showSlide(currentIndex - 1);
+			}
+
+			if (event.key === 'ArrowRight') {
+				showSlide(currentIndex + 1);
+			}
+		});
+
+		brochure.addEventListener(
+			'touchstart',
+			(event) => {
+				touchStartX =
+					event.changedTouches[0]?.clientX ?? null;
+			},
+			{ passive: true }
+		);
+
+		brochure.addEventListener(
+			'touchend',
+			(event) => {
+				if (touchStartX === null) return;
+
+				const touchEndX =
+					event.changedTouches[0]?.clientX;
+
+				if (touchEndX === undefined) return;
+
+				const difference = touchEndX - touchStartX;
+
+				if (Math.abs(difference) > 45) {
+					showSlide(
+						currentIndex + (difference < 0 ? 1 : -1)
+					);
+				}
+
+				touchStartX = null;
+			},
+			{ passive: true }
+		);
+
+		showSlide(0);
+	}
+</script>
+
 <style>
-	:global(html),
+	:global(html) {
+		background: #090909;
+	}
+
 	:global(body) {
 		margin: 0;
 		background: #090909;
@@ -33,34 +221,183 @@ import brochureBack from '../assets/images/MTHeartsBrochure-Back-Black.jpg';
 
 	.brochure-page {
 		box-sizing: border-box;
+		display: flex;
+		justify-content: center;
 		min-height: 100vh;
-		padding: 2rem;
+		min-height: 100svh;
+		padding: 2rem 1rem;
 		background: #090909;
 	}
 
-	.brochure-grid {
+	.brochure {
+		--pink: #fb357a;
+		--black: #090909;
+		--white: #ffffff;
+
+		box-sizing: border-box;
+		width: min(100%, 760px);
+		margin: auto;
+		padding: 1rem 3.75rem;
+		position: relative;
+		outline: none;
+	}
+
+	.stage {
 		display: grid;
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: 2rem;
-		max-width: 1600px;
-		margin: 0 auto;
-		align-items: start;
+		place-items: center;
+		position: relative;
+	}
+
+	.slides {
+		display: grid;
+		place-items: center;
+		width: 100%;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.slide {
+		grid-area: 1 / 1;
+		display: grid;
+		place-items: center;
+		width: 100%;
+		opacity: 0;
+		visibility: hidden;
+		transform: translateX(10px);
+		transition:
+			opacity 0.2s ease,
+			transform 0.2s ease;
+		pointer-events: none;
+	}
+
+	.slide.active {
+		opacity: 1;
+		visibility: visible;
+		transform: none;
+		pointer-events: auto;
 	}
 
 	.brochure-image {
 		display: block;
-		width: 100%;
+		width: auto;
+		max-width: 100%;
 		height: auto;
+		max-height: min(82vh, 980px);
+		object-fit: contain;
+		box-shadow: 0 16px 45px rgb(0 0 0 / 25%);
 	}
 
-	@media (max-width: 900px) {
+	.arrow {
+		position: absolute;
+		top: 50%;
+		z-index: 3;
+		width: 46px;
+		height: 46px;
+		border: 0;
+		border-radius: 50%;
+		background: var(--black);
+		color: var(--white);
+		font-size: 30px;
+		line-height: 1;
+		cursor: pointer;
+		transform: translateY(-50%);
+		box-shadow: 0 6px 18px rgb(0 0 0 / 25%);
+		transition:
+			background 0.2s ease,
+			transform 0.2s ease;
+	}
+
+	.arrow:hover,
+	.arrow:focus-visible {
+		background: var(--pink);
+	}
+
+	.arrow:focus-visible {
+		outline: 2px solid var(--white);
+		outline-offset: 3px;
+	}
+
+	.prev {
+		left: 0;
+	}
+
+	.next {
+		right: 0;
+	}
+
+	.controls {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 1rem;
+		margin-top: 1rem;
+	}
+
+	.dots {
+		display: flex;
+		gap: 9px;
+	}
+
+	.dot {
+		width: 10px;
+		height: 10px;
+		padding: 0;
+		border: 0;
+		border-radius: 50%;
+		background: #777777;
+		cursor: pointer;
+	}
+
+	.dot[aria-current='true'] {
+		background: var(--pink);
+		transform: scale(1.35);
+	}
+
+	.count {
+		min-width: 42px;
+		color: #ffffff;
+		font-size: 0.85rem;
+		font-weight: 700;
+		text-align: center;
+	}
+
+	@media (max-width: 640px) {
 		.brochure-page {
-			padding: 1rem;
+			padding: 1rem 0;
 		}
 
-		.brochure-grid {
-			grid-template-columns: 1fr;
-			gap: 1rem;
+		.brochure {
+			padding: 0.75rem 2.75rem;
+		}
+
+		.arrow {
+			width: 38px;
+			height: 38px;
+			font-size: 25px;
+		}
+
+		.brochure-image {
+			max-height: 78svh;
+		}
+	}
+
+	@media (max-width: 420px) {
+		.brochure {
+			padding-right: 2.1rem;
+			padding-left: 2.1rem;
+		}
+
+		.arrow {
+			width: 32px;
+			height: 32px;
+			font-size: 21px;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.slide {
+			transition: none;
 		}
 	}
 </style>
