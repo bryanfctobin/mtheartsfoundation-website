@@ -1,0 +1,66 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+
+import brochureFront from '../assets/images/MTHeartsBrochure-Front-Black.jpg';
+import brochureBack from '../assets/images/MTHeartsBrochure-Back-Black.jpg';
+---
+
+<Layout>
+	<main class="brochure-page">
+		<div class="brochure-grid">
+			<Image
+				src={brochureFront}
+				alt="MT Hearts Foundation brochure front"
+				class="brochure-image"
+			/>
+
+			<Image
+				src={brochureBack}
+				alt="MT Hearts Foundation brochure back"
+				class="brochure-image"
+			/>
+		</div>
+	</main>
+</Layout>
+
+<style>
+	:global(html),
+	:global(body) {
+		margin: 0;
+		background: #090909;
+	}
+
+	.brochure-page {
+		box-sizing: border-box;
+		min-height: 100vh;
+		padding: 2rem;
+		background: #090909;
+	}
+
+	.brochure-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 2rem;
+		max-width: 1600px;
+		margin: 0 auto;
+		align-items: start;
+	}
+
+	.brochure-image {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+
+	@media (max-width: 900px) {
+		.brochure-page {
+			padding: 1rem;
+		}
+
+		.brochure-grid {
+			grid-template-columns: 1fr;
+			gap: 1rem;
+		}
+	}
+</style>

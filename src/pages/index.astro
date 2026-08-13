@@ -22,7 +22,7 @@ import Layout from '../layouts/Layout.astro';
 						weekend of June 2027.
 					</p>
 
-					<p>More information will be announced soon.</p>
+					<p><a href="/brochure">More information will be announced soon.</a></p>
 				</div>
 			</section>
 		</main>
@@ -144,10 +144,16 @@ import Layout from '../layouts/Layout.astro';
 		line-height: 1.5;
 	}
 
-	.event-details p {
+	.event-details p, a {
 		margin: 0.4rem 0;
 	}
 
+	.event-details a {
+		color: #fff;
+		font-weight: 700;
+		text-decoration: none;
+	}
+	
 	.site-footer {
 		justify-content: center;
 		text-align: center;
