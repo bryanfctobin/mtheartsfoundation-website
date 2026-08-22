@@ -1,0 +1,41 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+
+import banner from '../assets/images/banner.jpg';
+---
+
+<Layout>
+	<main class="banner-page">
+		<Image
+			src={banner}
+			alt="MT Hearts Foundation banner"
+			class="banner-image"
+		/>
+	</main>
+</Layout>
+
+<style>
+	:global(html),
+	:global(body) {
+		margin: 0;
+		background: #090909;
+	}
+
+	.banner-page {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		min-height: 100vh;
+		min-height: 100svh;
+		padding: 0;
+		background: #090909;
+	}
+
+	.banner-image {
+		display: block;
+		width: 100%;
+		height: auto;
+		max-width: 100%;
+	}
+</style>
