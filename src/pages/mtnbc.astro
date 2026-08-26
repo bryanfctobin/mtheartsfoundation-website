@@ -17,11 +17,12 @@ import Layout from '../layouts/Layout.astro';
 		margin: 0;
 		width: 100%;
 		min-height: 100%;
-		background: #090909;
+		background: #ec5f8d;
 		overflow: hidden;
 	}
 
 	.mtnbc-page {
+		position: relative;
 		width: 100vw;
 		height: 100vh;
 		height: 100svh;
@@ -30,98 +31,132 @@ import Layout from '../layouts/Layout.astro';
 	}
 
 	.pattern {
-		width: 100%;
-		height: 100%;
+		position: absolute;
+
+		/*
+			Slightly oversized so movement never exposes
+			the background around the edges.
+		*/
+		inset: -12%;
+
 		background:
-			repeating-linear-gradient(
+			linear-gradient(
 				115deg,
 
 				#ec5f8d 0%,
-				#ec5f8d 17%,
+				#ec5f8d 18%,
 
-				#ffffff 17%,
-				#ffffff 17.35%,
+				#ffffff 18%,
+				#ffffff 18.25%,
 
-				#008080 17.35%,
-				#008080 29%,
+				#008080 18.25%,
+				#008080 31%,
 
-				#ffffff 29%,
-				#ffffff 29.35%,
+				#ffffff 31%,
+				#ffffff 31.25%,
 
-				#008000 29.35%,
-				#008000 41%,
+				#008000 31.25%,
+				#008000 44%,
 
-				#ffffff 41%,
-				#ffffff 41.35%,
+				#ffffff 44%,
+				#ffffff 44.25%,
 
-				#ec5f8d 41.35%,
-				#ec5f8d 58.35%,
+				#ec5f8d 44.25%,
+				#ec5f8d 62.25%,
 
-				#ffffff 58.35%,
-				#ffffff 58.7%,
+				#ffffff 62.25%,
+				#ffffff 62.5%,
 
-				#008080 58.7%,
-				#008080 70.35%,
+				#008080 62.5%,
+				#008080 75.25%,
 
-				#ffffff 70.35%,
-				#ffffff 70.7%,
+				#ffffff 75.25%,
+				#ffffff 75.5%,
 
-				#008000 70.7%,
-				#008000 82.35%,
+				#008000 75.5%,
+				#008000 88.25%,
 
-				#ffffff 82.35%,
-				#ffffff 82.7%,
+				#ffffff 88.25%,
+				#ffffff 88.5%,
 
-				#ec5f8d 82.7%,
-				#ec5f8d 99.7%
+				#ec5f8d 88.5%,
+				#ec5f8d 100%
 			);
+
+		background-size: 100% 100%;
+		background-repeat: no-repeat;
+
+		animation: barber-drift 40s linear infinite;
+		will-change: transform;
+	}
+
+	/*
+		Slow, one-direction diagonal movement,
+		similar to a barber pole.
+	*/
+	@keyframes barber-drift {
+		from {
+			transform: translate3d(-3%, -3%, 0);
+		}
+
+		to {
+			transform: translate3d(3%, 3%, 0);
+		}
 	}
 
 	@media (max-width: 600px) {
 		.pattern {
+			inset: -16%;
+
 			background:
-				repeating-linear-gradient(
+				linear-gradient(
 					115deg,
 
 					#ec5f8d 0%,
-					#ec5f8d 21%,
+					#ec5f8d 22%,
 
-					#ffffff 21%,
-					#ffffff 21.4%,
+					#ffffff 22%,
+					#ffffff 22.3%,
 
-					#008080 21.4%,
-					#008080 35%,
+					#008080 22.3%,
+					#008080 37%,
 
-					#ffffff 35%,
-					#ffffff 35.4%,
+					#ffffff 37%,
+					#ffffff 37.3%,
 
-					#008000 35.4%,
-					#008000 49%,
+					#008000 37.3%,
+					#008000 52%,
 
-					#ffffff 49%,
-					#ffffff 49.4%,
+					#ffffff 52%,
+					#ffffff 52.3%,
 
-					#ec5f8d 49.4%,
-					#ec5f8d 70.4%,
+					#ec5f8d 52.3%,
+					#ec5f8d 74.3%,
 
-					#ffffff 70.4%,
-					#ffffff 70.8%,
+					#ffffff 74.3%,
+					#ffffff 74.6%,
 
-					#008080 70.8%,
-					#008080 84.4%,
+					#008080 74.6%,
+					#008080 89.3%,
 
-					#ffffff 84.4%,
-					#ffffff 84.8%,
+					#ffffff 89.3%,
+					#ffffff 89.6%,
 
-					#008000 84.8%,
-					#008000 98.4%,
-
-					#ffffff 98.4%,
-					#ffffff 98.8%,
-
-					#ec5f8d 98.8%,
-					#ec5f8d 119.8%
+					#008000 89.6%,
+					#008000 100%
 				);
+
+			background-size: 100% 100%;
+			background-repeat: no-repeat;
+
+			animation-duration: 35s;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.pattern {
+			animation: none;
+			transform: none;
 		}
 	}
 </style>
