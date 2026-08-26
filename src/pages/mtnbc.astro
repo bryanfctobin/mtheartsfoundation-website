@@ -1,0 +1,127 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout>
+	<main
+		class="mtnbc-page"
+		aria-label="MTNBC metastatic breast cancer awareness colors"
+	>
+		<div class="pattern"></div>
+	</main>
+</Layout>
+
+<style>
+	:global(html),
+	:global(body) {
+		margin: 0;
+		width: 100%;
+		min-height: 100%;
+		background: #090909;
+		overflow: hidden;
+	}
+
+	.mtnbc-page {
+		width: 100vw;
+		height: 100vh;
+		height: 100svh;
+		overflow: hidden;
+		background: #ec5f8d;
+	}
+
+	.pattern {
+		width: 100%;
+		height: 100%;
+		background:
+			repeating-linear-gradient(
+				115deg,
+
+				#ec5f8d 0%,
+				#ec5f8d 17%,
+
+				#ffffff 17%,
+				#ffffff 17.35%,
+
+				#008080 17.35%,
+				#008080 29%,
+
+				#ffffff 29%,
+				#ffffff 29.35%,
+
+				#008000 29.35%,
+				#008000 41%,
+
+				#ffffff 41%,
+				#ffffff 41.35%,
+
+				#ec5f8d 41.35%,
+				#ec5f8d 58.35%,
+
+				#ffffff 58.35%,
+				#ffffff 58.7%,
+
+				#008080 58.7%,
+				#008080 70.35%,
+
+				#ffffff 70.35%,
+				#ffffff 70.7%,
+
+				#008000 70.7%,
+				#008000 82.35%,
+
+				#ffffff 82.35%,
+				#ffffff 82.7%,
+
+				#ec5f8d 82.7%,
+				#ec5f8d 99.7%
+			);
+	}
+
+	@media (max-width: 600px) {
+		.pattern {
+			background:
+				repeating-linear-gradient(
+					115deg,
+
+					#ec5f8d 0%,
+					#ec5f8d 21%,
+
+					#ffffff 21%,
+					#ffffff 21.4%,
+
+					#008080 21.4%,
+					#008080 35%,
+
+					#ffffff 35%,
+					#ffffff 35.4%,
+
+					#008000 35.4%,
+					#008000 49%,
+
+					#ffffff 49%,
+					#ffffff 49.4%,
+
+					#ec5f8d 49.4%,
+					#ec5f8d 70.4%,
+
+					#ffffff 70.4%,
+					#ffffff 70.8%,
+
+					#008080 70.8%,
+					#008080 84.4%,
+
+					#ffffff 84.4%,
+					#ffffff 84.8%,
+
+					#008000 84.8%,
+					#008000 98.4%,
+
+					#ffffff 98.4%,
+					#ffffff 98.8%,
+
+					#ec5f8d 98.8%,
+					#ec5f8d 119.8%
+				);
+		}
+	}
+</style>
