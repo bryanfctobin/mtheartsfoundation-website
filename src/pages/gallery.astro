@@ -1,0 +1,427 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+
+/*
+	Add your gallery imports here later, for example:
+
+	import photo1 from '../assets/images/gallery/photo1.jpg';
+	import photo2 from '../assets/images/gallery/photo2.jpg';
+	import photo3 from '../assets/images/gallery/photo3.jpg';
+
+	Then add them to the photos array below.
+*/
+
+import photo1 from '../assets/images/gallery/65-fabulous.jpg';
+import photo2 from '../assets/images/gallery/mom.jpg';
+import photo3 from '../assets/images/gallery/sisters.jpg';
+
+const photos = [
+	{
+		image: photo1,
+		alt: '65 and Fabulous',
+	},
+	{
+		image: photo2,
+		alt: 'Mom',
+	},
+	{
+		image: photo3,
+		alt: 'Sisters',
+	}
+];
+---
+
+<Layout>
+	<main class="gallery-page">
+		<section
+			class="gallery"
+			aria-label="MT Hearts Foundation photo gallery"
+			tabindex="0"
+		>
+			{
+				photos.length > 0 ? (
+					<>
+						<div class="stage">
+							<button
+								class="arrow prev"
+								type="button"
+								aria-label="Previous photo"
+							>
+								&#8249;
+							</button>
+
+							<ul class="slides">
+								{
+									photos.map((photo, index) => (
+										<li
+											class:list={['slide', { active: index === 0 }]}
+											data-slide={index}
+										>
+											<Image
+												src={photo.image}
+												alt={photo.alt}
+												class="gallery-image"
+											/>
+										</li>
+									))
+								}
+							</ul>
+
+							<button
+								class="arrow next"
+								type="button"
+								aria-label="Next photo"
+							>
+								&#8250;
+							</button>
+						</div>
+
+						<div class="controls">
+							<div class="dots" aria-label="Gallery photos">
+								{
+									photos.map((_, index) => (
+										<button
+											class="dot"
+											type="button"
+											data-index={index}
+											aria-label={`Show photo ${index + 1}`}
+											aria-current={index === 0 ? 'true' : 'false'}
+										/>
+									))
+								}
+							</div>
+
+							<div class="count" aria-live="polite">
+								1 / {photos.length}
+							</div>
+						</div>
+					</>
+				) : (
+					<div class="empty-gallery">
+						<h1>Gallery</h1>
+						<p>Photos coming soon.</p>
+					</div>
+				)
+			}
+		</section>
+	</main>
+</Layout>
+
+<script>
+	const gallery = document.querySelector('.gallery');
+
+	if (gallery) {
+		const slides = Array.from(
+			gallery.querySelectorAll<HTMLElement>('.slide')
+		);
+
+		const dots = Array.from(
+			gallery.querySelectorAll<HTMLButtonElement>('.dot')
+		);
+
+		const count = gallery.querySelector<HTMLElement>('.count');
+		const previous = gallery.querySelector<HTMLButtonElement>('.prev');
+		const next = gallery.querySelector<HTMLButtonElement>('.next');
+
+		let currentIndex = 0;
+		let touchStartX: number | null = null;
+
+		const showSlide = (newIndex: number) => {
+			if (slides.length === 0) return;
+
+			currentIndex =
+				(newIndex + slides.length) % slides.length;
+
+			slides.forEach((slide, index) => {
+				slide.classList.toggle(
+					'active',
+					index === currentIndex
+				);
+			});
+
+			dots.forEach((dot, index) => {
+				dot.setAttribute(
+					'aria-current',
+					index === currentIndex ? 'true' : 'false'
+				);
+			});
+
+			if (count) {
+				count.textContent =
+					`${currentIndex + 1} / ${slides.length}`;
+			}
+		};
+
+		previous?.addEventListener('click', () => {
+			showSlide(currentIndex - 1);
+		});
+
+		next?.addEventListener('click', () => {
+			showSlide(currentIndex + 1);
+		});
+
+		dots.forEach((dot) => {
+			dot.addEventListener('click', () => {
+				const index = Number(dot.dataset.index);
+
+				if (!Number.isNaN(index)) {
+					showSlide(index);
+				}
+			});
+		});
+
+		gallery.addEventListener('keydown', (event) => {
+			if (event.key === 'ArrowLeft') {
+				showSlide(currentIndex - 1);
+			}
+
+			if (event.key === 'ArrowRight') {
+				showSlide(currentIndex + 1);
+			}
+		});
+
+		gallery.addEventListener(
+			'touchstart',
+			(event) => {
+				touchStartX =
+					event.changedTouches[0]?.clientX ?? null;
+			},
+			{ passive: true }
+		);
+
+		gallery.addEventListener(
+			'touchend',
+			(event) => {
+				if (touchStartX === null) return;
+
+				const touchEndX =
+					event.changedTouches[0]?.clientX;
+
+				if (touchEndX === undefined) return;
+
+				const difference = touchEndX - touchStartX;
+
+				if (Math.abs(difference) > 45) {
+					showSlide(
+						currentIndex + (difference < 0 ? 1 : -1)
+					);
+				}
+
+				touchStartX = null;
+			},
+			{ passive: true }
+		);
+	}
+</script>
+
+<style>
+	:global(html),
+	:global(body) {
+		margin: 0;
+		min-height: 100%;
+		background: #090909;
+	}
+
+	.gallery-page {
+		box-sizing: border-box;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		min-height: 100vh;
+		min-height: 100svh;
+		padding: 2rem 1rem;
+		background: #090909;
+	}
+
+	.gallery {
+		width: min(100%, 1100px);
+		outline: none;
+	}
+
+	.stage {
+		position: relative;
+		display: grid;
+		place-items: center;
+	}
+
+	.slides {
+		display: grid;
+		place-items: center;
+		width: 100%;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.slide {
+		grid-area: 1 / 1;
+		display: grid;
+		place-items: center;
+		width: 100%;
+		opacity: 0;
+		visibility: hidden;
+		transform: translateX(12px);
+		transition:
+			opacity 0.25s ease,
+			transform 0.25s ease;
+		pointer-events: none;
+	}
+
+	.slide.active {
+		opacity: 1;
+		visibility: visible;
+		transform: none;
+		pointer-events: auto;
+	}
+
+	.gallery-image {
+		display: block;
+		width: auto;
+		max-width: 100%;
+		height: auto;
+		max-height: 78vh;
+		object-fit: contain;
+		border-radius: 8px;
+		box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+	}
+
+	.arrow {
+		position: absolute;
+		top: 50%;
+		z-index: 3;
+		width: 48px;
+		height: 48px;
+		border: 2px solid #ffffff;
+		border-radius: 50%;
+		background: #090909;
+		color: #ffffff;
+		font-size: 30px;
+		line-height: 1;
+		cursor: pointer;
+		transform: translateY(-50%);
+		transition:
+			background 0.2s ease,
+			color 0.2s ease,
+			transform 0.2s ease;
+	}
+
+	.arrow:hover {
+		background: #eab0c1;
+		color: #090909;
+	}
+
+	.arrow:focus-visible {
+		outline: 3px solid #eab0c1;
+		outline-offset: 4px;
+	}
+
+	.prev {
+		left: -65px;
+	}
+
+	.next {
+		right: -65px;
+	}
+
+	.controls {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 1rem;
+		margin-top: 1.25rem;
+	}
+
+	.dots {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 8px;
+	}
+
+	.dot {
+		width: 10px;
+		height: 10px;
+		padding: 0;
+		border: 0;
+		border-radius: 50%;
+		background: #666666;
+		cursor: pointer;
+	}
+
+	.dot[aria-current='true'] {
+		background: #eab0c1;
+		transform: scale(1.3);
+	}
+
+	.count {
+		min-width: 48px;
+		color: #ffffff;
+		font-size: 0.95rem;
+		font-weight: 700;
+		text-align: center;
+	}
+
+	.empty-gallery {
+		color: #ffffff;
+		text-align: center;
+	}
+
+	.empty-gallery h1 {
+		margin: 0 0 0.5rem;
+		font-size: clamp(2.5rem, 7vw, 5rem);
+	}
+
+	.empty-gallery p {
+		margin: 0;
+		font-size: 1.25rem;
+		color: #eab0c1;
+	}
+
+	@media (max-width: 1200px) {
+		.gallery {
+			width: min(100%, 900px);
+			padding-inline: 60px;
+			box-sizing: border-box;
+		}
+
+		.prev {
+			left: 0;
+		}
+
+		.next {
+			right: 0;
+		}
+	}
+
+	@media (max-width: 600px) {
+		.gallery-page {
+			padding: 1rem 0;
+		}
+
+		.gallery {
+			padding-inline: 48px;
+		}
+
+		.gallery-image {
+			max-height: 72svh;
+			border-radius: 4px;
+		}
+
+		.arrow {
+			width: 38px;
+			height: 38px;
+			font-size: 24px;
+		}
+
+		.controls {
+			margin-top: 1rem;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.slide {
+			transition: none;
+		}
+	}
+</style>
