@@ -1,5 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+
+import mtnbcRibbon from '../assets/images/mtnbc-ribbon.png';
 ---
 
 <Layout>
@@ -23,6 +26,14 @@ import Layout from '../layouts/Layout.astro';
 		<main>
 			<!-- HERO -->
 			<section class="landing-page" aria-labelledby="page-title">
+				<div class="hero-ribbon" aria-hidden="true">
+					<Image
+						src={mtnbcRibbon}
+						alt=""
+						class="hero-ribbon-image"
+					/>
+				</div>
+
 				<div class="hero">
 					<h1 id="page-title">MT Hearts Foundation</h1>
 
@@ -77,6 +88,14 @@ import Layout from '../layouts/Layout.astro';
 							<span aria-hidden="true">→</span>
 						</a>
 					</div>
+
+					<div class="story-ribbon" aria-hidden="true">
+						<Image
+							src={mtnbcRibbon}
+							alt=""
+							class="story-ribbon-image"
+						/>
+					</div>
 				</div>
 			</section>
 
@@ -85,6 +104,14 @@ import Layout from '../layouts/Layout.astro';
 				<div class="mtnbc-stripe" aria-hidden="true"></div>
 
 				<div class="content-container mtnbc-content">
+					<div class="mtnbc-ribbon-wrap">
+						<Image
+							src={mtnbcRibbon}
+							alt="Metastatic breast cancer awareness ribbon"
+							class="mtnbc-ribbon-image"
+						/>
+					</div>
+
 					<p class="section-eyebrow">Our Purpose</p>
 
 					<h2 id="mtnbc-title">
@@ -235,6 +262,7 @@ import Layout from '../layouts/Layout.astro';
 
 	.landing-page {
 		box-sizing: border-box;
+		position: relative;
 		display: flex;
 		justify-content: center;
 		align-items: flex-start;
@@ -242,10 +270,30 @@ import Layout from '../layouts/Layout.astro';
 		padding: clamp(4rem, 12vh, 8rem) 1.5rem 5rem;
 		text-align: center;
 		background: #eab0c1;
+		overflow: hidden;
 	}
 
 	.hero {
+		position: relative;
+		z-index: 2;
 		width: min(100%, 1100px);
+	}
+
+	.hero-ribbon {
+		position: absolute;
+		right: -2%;
+		bottom: -8%;
+		z-index: 1;
+		width: clamp(240px, 30vw, 480px);
+		opacity: 0.1;
+		transform: rotate(8deg);
+		pointer-events: none;
+	}
+
+	.hero-ribbon-image {
+		display: block;
+		width: 100%;
+		height: auto;
 	}
 
 	h1 {
@@ -371,6 +419,18 @@ import Layout from '../layouts/Layout.astro';
 		text-underline-offset: 0.3rem;
 	}
 
+	.story-ribbon {
+		width: clamp(70px, 8vw, 110px);
+		margin: 3.5rem auto -1rem;
+		opacity: 0.8;
+	}
+
+	.story-ribbon-image {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+
 	/* MTNBC */
 
 	.mtnbc-section {
@@ -385,7 +445,7 @@ import Layout from '../layouts/Layout.astro';
 	.mtnbc-stripe {
 		width: 100%;
 		height: 18px;
-		margin-bottom: clamp(4rem, 8vw, 6rem);
+		margin-bottom: clamp(3rem, 6vw, 4.5rem);
 		background:
 			linear-gradient(
 				90deg,
@@ -396,6 +456,17 @@ import Layout from '../layouts/Layout.astro';
 				#008000 70%,
 				#008000 100%
 			);
+	}
+
+	.mtnbc-ribbon-wrap {
+		width: clamp(100px, 11vw, 150px);
+		margin: 0 auto 1.5rem;
+	}
+
+	.mtnbc-ribbon-image {
+		display: block;
+		width: 100%;
+		height: auto;
 	}
 
 	.mtnbc-section .section-eyebrow {
@@ -437,19 +508,6 @@ import Layout from '../layouts/Layout.astro';
 		border-color: #090909;
 	}
 
-	.mtnbc-link {
-		color: #008080;
-		font-size: 1.2rem;
-		font-weight: 700;
-		text-decoration: none;
-	}
-
-	.mtnbc-link:hover {
-		color: #008000;
-		text-decoration: underline;
-		text-underline-offset: 0.3rem;
-	}
-
 	/* MOBILE */
 
 	@media (max-width: 600px) {
@@ -476,6 +534,13 @@ import Layout from '../layouts/Layout.astro';
 		.landing-page {
 			min-height: calc(100svh - 58px);
 			padding: 2.25rem 1.25rem 3.5rem;
+		}
+
+		.hero-ribbon {
+			width: 230px;
+			right: -75px;
+			bottom: -25px;
+			opacity: 0.08;
 		}
 
 		h1 {
@@ -516,13 +581,23 @@ import Layout from '../layouts/Layout.astro';
 			line-height: 1.6;
 		}
 
+		.story-ribbon {
+			width: 75px;
+			margin-top: 3rem;
+		}
+
 		.mtnbc-section {
 			padding-bottom: 4.5rem;
 		}
 
 		.mtnbc-stripe {
 			height: 14px;
-			margin-bottom: 4rem;
+			margin-bottom: 3rem;
+		}
+
+		.mtnbc-ribbon-wrap {
+			width: 100px;
+			margin-bottom: 1.25rem;
 		}
 
 		.mtnbc-content h2 {
