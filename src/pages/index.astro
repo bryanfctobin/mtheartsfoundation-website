@@ -1,4 +1,3 @@
-
 ---
 import Layout from '../layouts/Layout.astro';
 import { Image } from 'astro:assets';
@@ -9,8 +8,8 @@ import mtnbcRibbon from '../assets/images/mtnbc-ribbon.png';
 <Layout>
 	<div class="site">
 		<header class="site-header">
-			<a class="header-title" href="/">
-				MT Hearts Foundation
+			<a class="header-title" href="/brochure">
+				Become a Sponsor
 			</a>
 
 			<nav class="header-nav" aria-label="Main navigation">
@@ -40,23 +39,26 @@ import mtnbcRibbon from '../assets/images/mtnbc-ribbon.png';
 
 					<div class="event-details">
 						<p>
-							Join us for a special memorial event planned for the third
-							weekend of June 2027.
+							Join us Saturday, June 19, 2027, at Citrus High School in
+							Inverness for the inaugural MT Hearts Memorial 5K, featuring
+							a 5K Run, 1-Mile Walk, Kids Fun Run, and Virtual Race.
 						</p>
 
 						<div class="hero-actions">
-
 							<a
 								class="cta-button register-button"
-								href="https://drcsports.com/race/mt-hearts-5k"
+								href="https://runsignup.com/Race/FL/Inverness/MTHeartsMemorial5K"
 								target="_blank"
 								rel="noopener noreferrer"
 							>
 								Register for the 5K
 							</a>
 
-							<a class="cta-button" href="#marlenes-story">
-								Learn More
+							<a
+								class="cta-button sponsorship-button"
+								href="/brochure"
+							>
+								Become a Sponsor
 							</a>
 						</div>
 					</div>
@@ -76,17 +78,19 @@ import mtnbcRibbon from '../assets/images/mtnbc-ribbon.png';
 
 					<div class="story-copy">
 						<p>
-							Marlene Tobin was born on June 30, 1960 in New York City.
-							She later made her home in Inverness, Florida, where
-							family and community remained at the center of her life.
+							Marlene Tobin was born on June 30, 1960, in New York City
+							and later made her home in Inverness, Florida. A longtime
+							Citrus County educator, coach, mentor, athlete, and runner,
+							she placed family and community at the center of her life.
 						</p>
 
 						<p>
-							Marlene passed away peacefully at home on June 11, 2026,
-							under the loving care of her family and Hospice. MT Hearts
-							Foundation was created to carry her memory forward and turn
-							the love surrounding her life into something that can serve,
-							connect and support others.
+							Marlene passed peacefully at home on June 11, 2026,
+							surrounded by her loving family and under the care of hospice.
+							MT Hearts Foundation was created in her memory to preserve her
+							legacy through fitness, service, and community and to carry
+							forward the strength, generosity, and compassion that defined
+							her life.
 						</p>
 
 						<a
@@ -111,7 +115,10 @@ import mtnbcRibbon from '../assets/images/mtnbc-ribbon.png';
 			</section>
 
 			<!-- MTNBC -->
-			<section class="mtnbc-section" aria-labelledby="mtnbc-title">
+			<section
+				class="mtnbc-section"
+				aria-labelledby="mtnbc-title"
+			>
 				<div class="mtnbc-stripe" aria-hidden="true"></div>
 
 				<div class="content-container mtnbc-content">
@@ -131,32 +138,37 @@ import mtnbcRibbon from '../assets/images/mtnbc-ribbon.png';
 
 					<div class="mtnbc-copy">
 						<p>
-							MT Hearts Foundation is planning a special event during
-							the third weekend of June 2027 in support of the metastatic
-							breast cancer community and in memory of Marlene.
+							On Saturday, June 19, 2027, MT Hearts Foundation will host
+							the inaugural MT Hearts Memorial 5K at Citrus High School in
+							Inverness. Featuring a 5K Run, 1-Mile Walk, Kids Fun Run,
+							and Virtual Race, the event will bring runners, walkers,
+							families, and neighbors together to honor Marlene and support
+							causes close to her heart.
 						</p>
 
 						<p>
-							Through this event, we hope to bring family, friends and
-							community members together to remember, raise awareness and
-							give back. Registration for the MT Hearts 5K is now available.
-							Join us as we come together to honor Marlene and support
-							the metastatic breast cancer community.
+							Registration is now open. Proceeds after expenses support
+							metastatic breast cancer research through METAvivor and
+							students and families at Hernando Elementary School, with
+							50% directed to each.
 						</p>
 					</div>
 
 					<div class="mtnbc-actions">
 						<a
-							class="secondary-button"
-							href="https://drcsports.com/race/mt-hearts-5k"
+							class="cta-button register-button"
+							href="https://runsignup.com/Race/FL/Inverness/MTHeartsMemorial5K"
 							target="_blank"
 							rel="noopener noreferrer"
 						>
 							Register for the 5K
 						</a>
 
-						<a class="secondary-button" href="/brochure">
-							View Our Brochure
+						<a
+							class="cta-button sponsorship-button"
+							href="/brochure"
+						>
+							Become a Sponsor
 						</a>
 					</div>
 				</div>
@@ -189,6 +201,8 @@ import mtnbcRibbon from '../assets/images/mtnbc-ribbon.png';
 
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Arizonia&family=Cormorant+Garamond:wght@500;600;700&display=swap');
+
+	/* GLOBAL */
 
 	:global(html) {
 		margin: 0;
@@ -227,11 +241,17 @@ import mtnbcRibbon from '../assets/images/mtnbc-ribbon.png';
 	}
 
 	.site-header {
-		justify-content: space-between;
 		position: sticky;
 		top: 0;
 		z-index: 1000;
+		justify-content: space-between;
 		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+	}
+
+	.site-footer {
+		justify-content: center;
+		gap: 1.5rem;
+		text-align: center;
 	}
 
 	.header-title {
@@ -246,12 +266,6 @@ import mtnbcRibbon from '../assets/images/mtnbc-ribbon.png';
 		display: flex;
 		align-items: center;
 		gap: clamp(1rem, 3vw, 2rem);
-	}
-
-	.site-footer {
-		justify-content: center;
-		gap: 1.5rem;
-		text-align: center;
 	}
 
 	.site-header a,
@@ -288,9 +302,9 @@ import mtnbcRibbon from '../assets/images/mtnbc-ribbon.png';
 		align-items: flex-start;
 		min-height: calc(100svh - 60px);
 		padding: clamp(4rem, 12vh, 8rem) 1.5rem 5rem;
-		text-align: center;
-		background: #eab0c1;
 		overflow: hidden;
+		background: #eab0c1;
+		text-align: center;
 	}
 
 	.hero {
@@ -319,7 +333,7 @@ import mtnbcRibbon from '../assets/images/mtnbc-ribbon.png';
 	h1 {
 		margin: 0;
 		font-family: 'Arizonia', cursive;
-		font-size: clamp(4rem, 11vw, 9rem);
+		font-size: clamp(4rem, 8vw, 9rem);
 		font-weight: 400;
 		line-height: 0.95;
 		letter-spacing: 0;
@@ -327,7 +341,7 @@ import mtnbcRibbon from '../assets/images/mtnbc-ribbon.png';
 	}
 
 	.event-details {
-		max-width: 700px;
+		max-width: 830px;
 		margin: clamp(2rem, 5vw, 3.5rem) auto 0;
 		padding: 0 2rem;
 		font-size: clamp(1.55rem, 2.2vw, 2rem);
@@ -339,26 +353,42 @@ import mtnbcRibbon from '../assets/images/mtnbc-ribbon.png';
 		margin: 0.4rem 0;
 	}
 
-	/* HERO BUTTONS */
+	/* CTA BUTTONS */
+
+	.hero-actions,
+	.mtnbc-actions {
+		display: flex;
+		justify-content: center;
+		align-items: stretch;
+		flex-wrap: wrap;
+		gap: 1rem;
+	}
 
 	.hero-actions {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 1rem;
+		width: 100%;
+		max-width: 680px;
+		margin: 2.5rem auto 0;
+	}
+
+	.mtnbc-actions {
 		margin-top: 2.5rem;
 	}
 
-	.cta-button,
-	.secondary-button {
+	.cta-button {
 		box-sizing: border-box;
-		display: inline-block;
-		padding: 0.85rem 2.25rem;
-		background: #090909;
-		color: #ffffff;
+		display: inline-flex;
+		justify-content: center;
+		align-items: center;
+		flex: 1 1 280px;
+		width: 100%;
+		max-width: 320px;
+		min-height: 58px;
+		padding: 0.9rem 2rem;
 		border: 2px solid #ffffff;
 		border-radius: 999px;
-		font-size: 1.25rem;
+		background: #090909;
+		color: #ffffff;
+		font-size: 1.2rem;
 		font-weight: 700;
 		letter-spacing: 0.03em;
 		text-align: center;
@@ -368,44 +398,45 @@ import mtnbcRibbon from '../assets/images/mtnbc-ribbon.png';
 			transform 0.2s ease,
 			background 0.2s ease,
 			color 0.2s ease,
+			border-color 0.2s ease,
 			box-shadow 0.2s ease;
 	}
 
-	.cta-button {
-		width: min(100%, 300px);
-		margin: 0;
-	}
-
-	.cta-button:hover,
-	.secondary-button:hover {
-		background: #ffffff;
-		color: #090909;
+	.cta-button:hover {
 		transform: translateY(-2px);
 		box-shadow: 0 8px 22px rgba(0, 0, 0, 0.24);
-		border: 2px solid #000000;
 	}
 
-	/* DISTINCT REGISTRATION BUTTON */
-
-	.register-button {
-		background: #ffffff;
-		color: #090909;
-		border-color: #090909;
-	}
-
-	.register-button:hover {
-		background: #090909;
-		color: #ffffff;
-		border-color: #ffffff;
-	}
-
-	.cta-button:focus-visible,
-	.secondary-button:focus-visible {
+	.cta-button:focus-visible {
 		outline: 3px solid #090909;
 		outline-offset: 4px;
 	}
 
-	/* SHARED CONTENT */
+	.register-button {
+		border-color: #090909;
+		background: #ffffff;
+		color: #090909;
+	}
+
+	.register-button:hover {
+		border-color: #ffffff;
+		background: #090909;
+		color: #ffffff;
+	}
+
+	.sponsorship-button {
+		border-color: #ffffff;
+		background: #090909;
+		color: #ffffff;
+	}
+
+	.sponsorship-button:hover {
+		border-color: #090909;
+		background: #ffffff;
+		color: #090909;
+	}
+
+	/* SHARED SECTION CONTENT */
 
 	.content-container {
 		box-sizing: border-box;
@@ -442,14 +473,14 @@ import mtnbcRibbon from '../assets/images/mtnbc-ribbon.png';
 	}
 
 	.story-copy {
-		max-width: 760px;
+		max-width: 830px;
 		margin: 2rem auto 0;
 		font-size: clamp(1.3rem, 2vw, 1.6rem);
 		line-height: 1.65;
 	}
 
 	.story-copy p {
-		margin: 0 0 1.5rem;
+		margin: 0 0 1.2rem;
 	}
 
 	.text-link {
@@ -461,10 +492,16 @@ import mtnbcRibbon from '../assets/images/mtnbc-ribbon.png';
 		text-decoration: none;
 	}
 
-	.text-link:hover {
+	.text-link:hover,
+	.text-link:focus-visible {
 		color: #ffffff;
 		text-decoration: underline;
 		text-underline-offset: 0.3rem;
+	}
+
+	.text-link:focus-visible {
+		outline: 2px solid #ffffff;
+		outline-offset: 4px;
 	}
 
 	.story-ribbon {
@@ -532,7 +569,7 @@ import mtnbcRibbon from '../assets/images/mtnbc-ribbon.png';
 	}
 
 	.mtnbc-copy {
-		max-width: 760px;
+		max-width: 830px;
 		margin: 2rem auto 0;
 		font-size: clamp(1.25rem, 2vw, 1.55rem);
 		font-weight: 500;
@@ -541,19 +578,6 @@ import mtnbcRibbon from '../assets/images/mtnbc-ribbon.png';
 
 	.mtnbc-copy p {
 		margin: 0 0 1.4rem;
-	}
-
-	.mtnbc-actions {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		flex-wrap: wrap;
-		gap: 1.5rem;
-		margin-top: 2.5rem;
-	}
-
-	.secondary-button {
-		border-color: #090909;
 	}
 
 	/* MOBILE */
@@ -575,8 +599,8 @@ import mtnbcRibbon from '../assets/images/mtnbc-ribbon.png';
 		}
 
 		.site-footer {
-			gap: 1rem;
 			flex-wrap: wrap;
+			gap: 1rem;
 		}
 
 		.landing-page {
@@ -585,9 +609,9 @@ import mtnbcRibbon from '../assets/images/mtnbc-ribbon.png';
 		}
 
 		.hero-ribbon {
-			width: 230px;
 			right: -75px;
 			bottom: -25px;
+			width: 230px;
 			opacity: 0.08;
 		}
 
@@ -603,15 +627,25 @@ import mtnbcRibbon from '../assets/images/mtnbc-ribbon.png';
 			line-height: 1.55;
 		}
 
+		.hero-actions,
+		.mtnbc-actions {
+			flex-direction: column;
+			align-items: center;
+		}
+
 		.hero-actions {
+			max-width: 300px;
 			margin-top: 2rem;
-			gap: 0.9rem;
+			gap: 0.85rem;
 		}
 
 		.cta-button {
+			flex: none;
 			width: min(100%, 300px);
+			max-width: 100%;
+			min-height: 54px;
 			padding: 0.75rem 1.5rem;
-			font-size: 1.15rem;
+			font-size: 1.3rem;
 		}
 
 		.content-container {
@@ -624,12 +658,12 @@ import mtnbcRibbon from '../assets/images/mtnbc-ribbon.png';
 		}
 
 		h2 {
-			font-size: clamp(3.25rem, 16vw, 4.75rem);
+			font-size: clamp(2.95rem, 8vw, 4.75rem);
 		}
 
 		.story-copy,
 		.mtnbc-copy {
-			font-size: 1.25rem;
+			font-size: 1.2rem;
 			line-height: 1.6;
 		}
 
@@ -657,13 +691,7 @@ import mtnbcRibbon from '../assets/images/mtnbc-ribbon.png';
 		}
 
 		.mtnbc-actions {
-			flex-direction: column;
-			gap: 1.25rem;
-		}
-
-		.secondary-button {
-			width: min(100%, 280px);
-			font-size: 1.1rem;
+			gap: 1rem;
 		}
 	}
 
@@ -674,8 +702,7 @@ import mtnbcRibbon from '../assets/images/mtnbc-ribbon.png';
 			scroll-behavior: auto;
 		}
 
-		.cta-button,
-		.secondary-button {
+		.cta-button {
 			transition: none;
 		}
 	}
